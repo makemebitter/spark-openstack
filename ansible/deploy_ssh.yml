@@ -40,6 +40,8 @@
     - name: install Python 2 if missing
       raw: test -e /usr/bin/python || (sudo apt -y update && sudo apt install -y python-minimal)
       delay: 10
+    - name: install Python 3.6
+      raw: sudo add-apt-repository -y ppa:jonathonf/python-3.6 && (sudo apt-get update) && (sudo apt-get install -y python3.6) && (curl https://bootstrap.pypa.io/get-pip.py | sudo -H python3.6)
   tags: prepare
 
 - hosts: "{{ cluster_name }}_master"

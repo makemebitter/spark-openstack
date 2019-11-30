@@ -16,31 +16,6 @@
   - install
   - spark_install
 
-- block:
-  - name: install packages
-    apt: name={{ item }} state=present
-    with_items:
-      - libffi-dev
-      - libssl-dev
-      - python3-dev
-      - python3-pip
-      - python3.6-venv
-    tags:
-    - prepare
-
-  - name: upgrade pip
-    pip3:
-      name: pip3
-      extra_args: --upgrade
-
-  - name: install python packages
-    pip3: name={{ item }} state=present
-    with_items:
-      - numpy
-      - pandas
-    tags:
-    - prepare
-
 # - name: get Spark distro checksum
 #   local_action: get_url url={{ spark_checksum_url }} dest=files/
 #   become: false
@@ -64,6 +39,31 @@
   tags:
   - install
   - spark_install
+
+- block:
+  - name: install packages
+    apt: name={{ item }} state=present
+    with_items:
+      - libffi-dev
+      - libssl-dev
+      - python3-dev
+      - python3.6-venv
+    tags:
+    - prepare
+
+  - name: upgrade pip
+    pip:
+      name: pip
+      extra_args: --upgrade
+
+  - name: install python packages
+    pip: name={{ item }} state=present
+    with_items:
+      - numpy
+      - pandas
+    sudo: yes
+    tags:
+    - prepare
 
 - include: detect_conf.yml
   when: detect_conf
