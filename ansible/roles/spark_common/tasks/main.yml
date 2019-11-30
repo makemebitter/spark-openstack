@@ -17,8 +17,6 @@
   - spark_install
 
 - block:
-  - apt: update_cache=yes cache_valid_time=86400
-
   - name: install packages
     apt: name={{ item }} state=present
     with_items:
