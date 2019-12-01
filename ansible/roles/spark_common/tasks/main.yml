@@ -41,26 +41,16 @@
   - spark_install
 
 - block:
-  - name: install packages
-    apt: name={{ item }} state=present
-    with_items:
-      - libffi-dev
-      - libssl-dev
-      - python3-dev
-      - python3.6-venv
-    tags:
-    - prepare
-
   - name: upgrade pip
     pip:
       name: pip
       extra_args: --upgrade
-
   - name: install python packages
     pip: name={{ item }} state=present
     with_items:
       - numpy
       - pandas
+      - matplotlib
     sudo: yes
     tags:
     - prepare
